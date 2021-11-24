@@ -1,0 +1,18 @@
+{% extends "global/Page.html" %}
+{% load static otree %}
+
+{% block content %}
+<body class="bg-light">
+    <div class="card">
+        <div class="card-header text-center font-weight-bold">
+            <h5 class="card-title"> Finish </h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+            <p> You have finished the tasks. You have done {{player.correct}} out of {{player.tasks}} tasks correctly.
+            </p>
+        </div>
+    </div>
+</body>
+
+{% endblock %}
