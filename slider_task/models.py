@@ -13,6 +13,7 @@ from otree.api import (
 
 import random
 from itertools import chain
+import statistics
 
 
 author = ''
@@ -39,12 +40,18 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
-    pass
+    def set_perform(self):
+        players = self.get_players()
+        perform = [p.participant.vars['correct'] for p in players]
+        median = statistics.median(perform)
+        for p in players:
+            if p.participant.vars['correct'] >= median:
+                p.participant.vars['performance'] = 'high'
+            else:
+                p.participant.vars['performance'] = 'low'
 
 
 class Player(BasePlayer):
-    prolific_ID = models.StringField(label="Please insert word 'bonus'")
-    correctID = models.IntegerField()
     index = models.IntegerField()
     tasks = models.IntegerField()
     correct = models.IntegerField()

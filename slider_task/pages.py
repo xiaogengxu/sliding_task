@@ -32,6 +32,10 @@ class Task(Page):
         self.participant.vars['correct'] = self.player.correct
 
 
+class AfterTask(WaitPage):
+    after_all_players_arrive = 'set_perform'
+
+
 class Results(Page):
     form_model = 'player'
 
@@ -42,4 +46,4 @@ class Results(Page):
         }
 
 
-page_sequence = [Intro, Task, Results]
+page_sequence = [Intro, Task, AfterTask, Results]
