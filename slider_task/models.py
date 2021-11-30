@@ -42,10 +42,14 @@ class Group(BaseGroup):
     def set_perform(self):
         players = self.get_players()
         perform = [p.participant.vars['correct'] for p in players]
-        median = statistics.median(perform)
+        j = 0
         for p in players:
-            if p.participant.vars['correct'] >= median:
-                p.participant.vars['performance'] = 'high'
+            if p.participant.vars['correct'] >= statistics.median(perform):
+                if j <= divmod(len(perform), 2):
+                    p.participant.vars['performance'] = 'high'
+                    j += 1
+                else:
+                    p.participant.vars['performance'] = 'low'
             else:
                 p.participant.vars['performance'] = 'low'
 
