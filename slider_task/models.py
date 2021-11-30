@@ -29,7 +29,6 @@ class Constants(BaseConstants):
     num_rounds = 1
     # MANUALLY ENTER NUMBER OF EFFORT TASKS
     task_list = 48
-    accuracy_target = 0.95
 
 
 class Subsession(BaseSubsession):
@@ -55,7 +54,6 @@ class Player(BasePlayer):
     index = models.IntegerField()
     tasks = models.IntegerField()
     correct = models.IntegerField()
-    sliderTarget = models.BooleanField()
 
     for j in range(1, Constants.task_list + 1):
         locals()['sliderValue' + str(j)] = models.IntegerField()
@@ -76,8 +74,3 @@ class Player(BasePlayer):
             if self.participant.vars['choices_made'][i-1] == self.participant.vars['random_numbers'][i-1]:
                 correct += 1
         self.correct = correct
-        accuracy_player = self.correct/self.tasks
-        if accuracy_player > Constants.accuracy_target:
-            self.sliderTarget = True
-        else:
-            self.sliderTarget = False
