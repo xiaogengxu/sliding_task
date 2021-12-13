@@ -45,7 +45,7 @@ class Group(BaseGroup):
         j = 0
         for p in players:
             if p.participant.vars['correct'] >= statistics.median(perform):
-                if j <= divmod(len(perform), 2):
+                if j <= divmod(len(perform), 2)[0]:
                     p.participant.vars['performance'] = 'high'
                     j += 1
                 else:
