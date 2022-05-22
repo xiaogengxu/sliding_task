@@ -140,6 +140,9 @@
             });
 
             var time_value;
+            // If there are more than one round, return round number in var for template as string
+            // Set a var in script, var = "counter"+{round_num|json};
+            // Then every round the timer will start from 120 seconds.
             if (sessionStorage.getItem("counter")) {
                 if (sessionStorage.getItem("counter") <= 0) {
                     time_value = 120;

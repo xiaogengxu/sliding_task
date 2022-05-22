@@ -15,7 +15,7 @@ SESSION_CONFIGS = [
     {
         'name': 'slider_task',
         'display_name': "Slider task",
-        'num_demo_participants': 4,
+        'num_demo_participants': 2,
         'app_sequence': ['slider_task'],
     },
 ]
