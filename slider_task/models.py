@@ -41,23 +41,35 @@ class Subsession(BaseSubsession):
 class Group(BaseGroup):
     def set_perform(self):
         players = self.get_players()
-        perform = [p.participant.vars['correct'] for p in players]
-        j = 0
+        perform_dict = {}
         for p in players:
-            if p.participant.vars['correct'] >= statistics.median(perform):
-                if j <= divmod(len(perform), 2)[0]:
-                    p.participant.vars['performance'] = 'high'
-                    j += 1
-                else:
+            perform_dict[p.participant.label] = p.participant.vars['correct']
+
+        # Get the dictionary sorted by the number of correct sliders
+        sorted_perform_dict = dict(sorted(perform_dict.items(), key=lambda item: item[1]))
+        # Store the sorted participant labels in a list
+        sorted_player_list = list(sorted_perform_dict.keys())
+        middle_num = divmod(len(sorted_perform_dict), 2)[0]
+
+        if divmod(len(sorted_perform_dict), 2)[1] == 0:
+            for p in players:
+                if sorted_player_list.index(p.participant.label) < middle_num:
                     p.participant.vars['performance'] = 'low'
-            else:
-                p.participant.vars['performance'] = 'low'
+                    p.performance = 'low'
+                else:
+                    p.participant.vars['performance'] = 'high'
+                    p.performance = 'high'
+        else:
+            raise RuntimeError(
+                'The number of participants is odd.'
+            )
 
 
 class Player(BasePlayer):
     index = models.IntegerField()
     tasks = models.IntegerField()
     correct = models.IntegerField()
+    performance = models.StringField(blank=True)
 
     for j in range(1, Constants.task_list + 1):
         locals()['sliderValue' + str(j)] = models.IntegerField()
